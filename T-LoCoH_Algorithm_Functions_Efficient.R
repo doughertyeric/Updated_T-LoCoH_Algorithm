@@ -274,7 +274,11 @@ algo.efficient <- function(tt.split, k.max, data.lxy, data, crs) {
   
   print(max.row2)
   
-  temp.min2 <- opt.k2 - 5
+  if (opt.k2 > 10) {
+    temp.min2 <- opt.k2 - 5
+  } else {
+    temp.min2 <- 5
+  }
   temp.max2 <- opt.k2 + 5
   k.vals3 <- seq(temp.min2, temp.max2, 2)
   
