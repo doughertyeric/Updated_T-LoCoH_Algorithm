@@ -257,7 +257,11 @@ algo.efficient <- function(tt.split, k.max, data.lxy, data, crs) {
   
   print(max.row)
   
-  temp.min <- opt.k - 20
+  if (opt.k > 20) {
+    temp.min <- opt.k - 20
+  } else {
+    temp.min <- 5
+  }
   temp.max <- opt.k + 20
   k.vals2 <- seq(temp.min, temp.max, 5)
   
@@ -293,7 +297,7 @@ opt.params <- data.frame(matrix(0,length(name.list),5))
 for (p in 1:length(name.list)) {
   # Import data and format such that it contains x, y, and Datetime columns
   data <- read.csv(paste0(name.list[p], ".csv"))
-  data$Datetime <- as.POSIXct(data$date, tz="GMT", origin = "1970-01-01 00:00:00")
+  data$Datetime <- as.POSIXct(data$Datetime, tz="GMT", origin = "1970-01-01 00:00:00")
   crs <- '+proj=utm +south +zone=33 +ellps=WGS84'
     
   # Execute formatting command to fill gaps, then create lxy object and train/test splits
@@ -307,7 +311,7 @@ for (p in 1:length(name.list)) {
   
   # Carry out efficient algorithm (three levels: 20, 5, 2)
   strt <- Sys.time()
-  overall.trace <- algo.efficient(tt.split, k.max=800, 
+  overall.trace <- algo.efficient(tt.split, k.max=200, 
                                   data.lxy=full.lxy, data=data, crs=crs)
   print(Sys.time() - strt)
   
