@@ -59,7 +59,7 @@ train.test <- function (data, seed=1) {
   set.seed(seed)
   
   for (i in 1:ncol(df)) {
-    samp <- sample(seq(1,nrow(data),1), round(0.002222*(nrow(data))))
+    samp <- sample(seq(1, (nrow(data) - 51),1), round(0.002222*(nrow(data))))
     for (j in 1:length(samp)) {
       for (k in 1:nrow(df)) {
         if (k == samp[j]) {
